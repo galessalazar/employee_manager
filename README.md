@@ -3,7 +3,8 @@
 ## Links
 
 <a href = 'https://github.com/galessalazar/employee_manager'>Github Repo</a></br>
-<a href = ''>Video Submission</a>
+<a href = ''>Video Submission</a></br>
+<a href = 'https://www.youtube.com/watch?v=qw--VYLpxG4'>YouTube Tutorial</a>
 
 ## Description
 
