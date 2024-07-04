@@ -3,6 +3,9 @@
 //this makes commits ignore username/ passwords from being published on github, imports the .env file
 require ('dotenv').config();
 const inquirer = require('inquirer');
+const { Pool } = require('pg');
+
+
 
 const questions = [
     {
@@ -27,10 +30,22 @@ const questions = [
     {
         type:'input',
         name: 'add-department',
-        message: 'What is the name of the department?'
+        message: 'Add new department here:'
     },
     
 ]
+
+const pool = new Pool(
+    {
+        user: '',
+        password: '',
+        host: 'localhost',
+        database: 'employee_manager'
+    },
+    console.log('Connected to employee_mananger database.')
+)
+
+pool.connect();
 
 inquirer.prompt(questions)
 .then(answers  =>
