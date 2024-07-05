@@ -5,7 +5,7 @@ CREATE DATABASE employee_manager;
 
 CREATE TABLE department (
     id BIGSERIAL PRIMARY KEY,
-    name VARCHAR(30) UNIQUE NOT NULL,
+    name VARCHAR(30) UNIQUE NOT NULL
 );
 
 CREATE TABLE role (
