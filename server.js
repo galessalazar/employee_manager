@@ -1,15 +1,18 @@
 require ('dotenv').config();
 const inquirer = require('inquirer');
 const { Pool } = require('pg');
+require('console.table')
+const path = require('path');
+
 
 const pool = new Pool(
     {
-        user: 'postgres',
-        password: '3y3hartJ0n!',
-        host: 'localhost',
-        database: 'employee_manager'
+        user: 'PGUSER',
+        password: 'PGPASSWORD',
+        host: 'PGHOST',
+        database: 'PGDATABASE'
     },
-    console.log('Connected to employee_mananger database.')
+    console.log('Connected to employee_manager database.')
 )
 pool.connect();
 
@@ -28,7 +31,7 @@ const questions = [
 
 
 
-
+function menu(){
 inquirer.prompt(questions)
 .then(answers  =>
     {
@@ -62,14 +65,59 @@ inquirer.prompt(questions)
              
         }
     });
+};
 
-    function viewAllDeparments() {}
+    function viewAllDeparments() {
+        pool.query('SELECT * FROM department', function (err, data){
+            if (err) {
+                console.error(err)
+            } else {
+                console.table(data.rows)
+                menu()
+            }
+        })
+    }
 
-    function viewAllRoles() {}
+    function viewAllRoles() {
+        pool.query('SELECT * FROM role', function (err, data){
+            if (err) {
+                console.error(err)
+            } else {
+                console.table(data.rows)
+                menu()
+            }
+        })
+    }
 
-    function viewAllEmployees() {}
+    function viewAllEmployees() {
+        pool.query('SELECT * FROM employee', function (err, data){
+            if (err) {
+                console.error(err)
+            } else {
+                console.table(data.rows)
+                menu()
+            }
+        })
+    }
 
-    function addDepartment() {}
+    function addDepartment() {
+        inquirer.prompt([
+            {
+                type:'input',
+                name:'addDepartment',
+                message:'enter deparment name'
+            }
+        ]).then(roleAnswer =>{
+            let department = roleAnswer.addDepartment
+            pool.query('INSERT INTO department (name) VALUES ($1)', [department], function(err, data) {
+                if(err) {
+                    console.error(err)
+                } else {
+                    viewAllDeparments()
+                }
+            })
+        })
+    }
 
     function addRole() {}
 
@@ -81,3 +129,4 @@ inquirer.prompt(questions)
         console.log('goodbye!')
         process.exit()
     }
+    menu();
